@@ -172,24 +172,24 @@ export default function Dashboard() {
               <button onClick={() => setAlumnoEditando(null)} className="text-gray-400 hover:text-white">✕</button>
             </div>
 
-            <div className="space-y-4 mb-6">
+            <div className="space-y-5 mb-6">
               <div>
-                <label className="text-xs uppercase tracking-wider text-gray-500 font-bold ml-1">Nombre(s)</label>
-                <input type="text" value={alumnoEditando.nombre} onChange={e => setAlumnoEditando({ ...alumnoEditando, nombre: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                <label className="text-xs uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Nombre(s)</label>
+                <input type="text" value={alumnoEditando.nombre} onChange={e => setAlumnoEditando({ ...alumnoEditando, nombre: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
               </div>
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
-                  <label className="text-xs uppercase tracking-wider text-gray-500 font-bold ml-1">Ap. Paterno</label>
-                  <input type="text" value={alumnoEditando.apellido_paterno} onChange={e => setAlumnoEditando({ ...alumnoEditando, apellido_paterno: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                  <label className="text-xs uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Ap. Paterno</label>
+                  <input type="text" value={alumnoEditando.apellido_paterno} onChange={e => setAlumnoEditando({ ...alumnoEditando, apellido_paterno: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
                 </div>
                 <div className="flex-1">
-                  <label className="text-xs uppercase tracking-wider text-gray-500 font-bold ml-1">Ap. Materno</label>
-                  <input type="text" value={alumnoEditando.apellido_materno || ''} onChange={e => setAlumnoEditando({ ...alumnoEditando, apellido_materno: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                  <label className="text-xs uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Ap. Materno</label>
+                  <input type="text" value={alumnoEditando.apellido_materno || ''} onChange={e => setAlumnoEditando({ ...alumnoEditando, apellido_materno: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
                 </div>
               </div>
               <div>
-                <label className="text-xs uppercase tracking-wider text-gray-500 font-bold ml-1">Grado Escolar</label>
-                <select className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-sm text-yellow-500 focus:outline-none focus:border-indigo-500" value={alumnoEditando.id_grado || ''} onChange={e => setAlumnoEditando({ ...alumnoEditando, id_grado: e.target.value })}>
+                <label className="text-xs uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Grado Escolar</label>
+                <select className="w-full input-glass rounded-xl p-3 text-sm text-yellow-500 [&>option]:bg-gray-900" value={alumnoEditando.id_grado || ''} onChange={e => setAlumnoEditando({ ...alumnoEditando, id_grado: e.target.value })}>
                   {grados.map(g => <option key={g.id_grado} value={g.id_grado}>{g.nombre_grado}</option>)}
                 </select>
               </div>

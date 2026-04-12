@@ -94,7 +94,13 @@ export default function AlumnoDetalle() {
 
   const handleSaveProfile = async () => {
     setLoadingSubida(true);
-    const result = await handleUpdate(formProfile);
+    const profileLimpio = {
+      ...formProfile,
+      nombre: typeof formProfile.nombre === 'string' ? formProfile.nombre.trim() : formProfile.nombre,
+      apellido_paterno: typeof formProfile.apellido_paterno === 'string' ? formProfile.apellido_paterno.trim() : formProfile.apellido_paterno,
+      apellido_materno: typeof formProfile.apellido_materno === 'string' ? formProfile.apellido_materno.trim() : formProfile.apellido_materno
+    };
+    const result = await handleUpdate(profileLimpio);
     if (result) setIsEditingProfile(false);
     setLoadingSubida(false);
   };
@@ -395,35 +401,35 @@ export default function AlumnoDetalle() {
 
             <div className="text-center mb-6">
               <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center text-2xl font-bold mb-3 shadow-lg">
-                {alumno.nombre.charAt(0)}{alumno.apellido_paterno.charAt(0)}
+                {alumno?.nombre?.charAt(0) || 'X'}{alumno?.apellido_paterno?.charAt(0) || 'X'}
               </div>
 
               {!isEditingProfile ? (
                 <>
-                  <p className="font-semibold text-lg leading-tight">{alumno.nombre} {alumno.apellido_paterno} {alumno.apellido_materno}</p>
+                  <p className="font-semibold text-lg leading-tight break-all">{alumno?.nombre} {alumno?.apellido_paterno} {alumno?.apellido_materno}</p>
                   <div className="mt-2 inline-flex items-center space-x-2 bg-black/40 px-3 py-1 rounded-full border border-white/5">
                     <span className="text-xs text-gray-500">ID / Matrícula:</span>
                     <span className="text-xs text-indigo-300 font-mono tracking-widest">{alumno.identificador_alumno}</span>
                   </div>
                 </>
               ) : (
-                <div className="space-y-3 mt-4 text-left">
+                <div className="space-y-4 mt-4 text-left">
                   <div>
-                    <label className="text-[10px] uppercase tracking-wider text-gray-500 font-bold ml-1">Nombre(s)</label>
-                    <input type="text" value={formProfile.nombre} onChange={e => setFormProfile({ ...formProfile, nombre: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                    <label className="text-[10px] uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Nombre(s)</label>
+                    <input type="text" maxLength={50} value={formProfile.nombre} onChange={e => setFormProfile({ ...formProfile, nombre: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase tracking-wider text-gray-500 font-bold ml-1">Apellido Paterno</label>
-                    <input type="text" value={formProfile.apellido_paterno} onChange={e => setFormProfile({ ...formProfile, apellido_paterno: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                    <label className="text-[10px] uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Apellido Paterno</label>
+                    <input type="text" maxLength={50} value={formProfile.apellido_paterno} onChange={e => setFormProfile({ ...formProfile, apellido_paterno: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase tracking-wider text-gray-500 font-bold ml-1">Apellido Materno</label>
-                    <input type="text" value={formProfile.apellido_materno} onChange={e => setFormProfile({ ...formProfile, apellido_materno: e.target.value })} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500" />
+                    <label className="text-[10px] uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Apellido Materno</label>
+                    <input type="text" maxLength={50} value={formProfile.apellido_materno} onChange={e => setFormProfile({ ...formProfile, apellido_materno: e.target.value })} className="w-full input-glass rounded-xl p-3 text-sm text-white" />
                   </div>
 
                   <div>
-                    <label className="text-[10px] uppercase tracking-wider text-gray-500 font-bold ml-1">Grado Escolar</label>
-                    <select className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-sm text-yellow-500 focus:outline-none focus:border-indigo-500" value={formProfile.id_grado || ''} onChange={e => setFormProfile({ ...formProfile, id_grado: e.target.value })}>
+                    <label className="text-[10px] uppercase tracking-wider text-gray-400 font-bold ml-1 mb-1 block">Grado Escolar</label>
+                    <select className="w-full input-glass rounded-xl p-3 text-sm text-yellow-500 [&>option]:bg-gray-900" value={formProfile.id_grado || ''} onChange={e => setFormProfile({ ...formProfile, id_grado: e.target.value })}>
                       {grados.map(g => <option key={g.id_grado} value={g.id_grado}>{g.nombre_grado}</option>)}
                     </select>
                   </div>

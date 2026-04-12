@@ -48,6 +48,15 @@ export default function NuevoAlumno() {
     e.preventDefault();
     if (isSubmitting.current) return;
     
+    if (formData.fecha_nacimiento) {
+      const selectedYear = parseInt(formData.fecha_nacimiento.split('-')[0], 10);
+      const currentYear = new Date().getFullYear();
+      if (selectedYear > currentYear) {
+        setMensaje({ text: '❌ El año de nacimiento no puede ser mayor al actual', type: 'error' });
+        return;
+      }
+    }
+    
     isSubmitting.current = true;
     setLoading(true);
     setMensaje({ text: '', type: '' });
@@ -57,7 +66,14 @@ export default function NuevoAlumno() {
       const res = await fetch('https://073uvgd1q2.execute-api.us-east-1.amazonaws.com/dev/alumno', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ ...formData, id_grado: parseInt(formData.id_grado) })
+        body: JSON.stringify({ 
+          ...formData, 
+          identificador_alumno: formData.identificador_alumno.trim().toUpperCase(),
+          nombre: formData.nombre.trim(),
+          apellido_paterno: formData.apellido_paterno.trim(),
+          apellido_materno: formData.apellido_materno ? formData.apellido_materno.trim() : '',
+          id_grado: parseInt(formData.id_grado) 
+        })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || data.message || 'Error al guardar');
@@ -87,23 +103,23 @@ export default function NuevoAlumno() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Matrícula *</label>
-            <input type="text" name="identificador_alumno" required value={formData.identificador_alumno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
+            <input type="text" name="identificador_alumno" required maxLength={30} value={formData.identificador_alumno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
           </div>
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Nombre(s) *</label>
-            <input type="text" name="nombre" required value={formData.nombre} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
+            <input type="text" name="nombre" required maxLength={50} value={formData.nombre} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
           </div>
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Apellido Paterno *</label>
-            <input type="text" name="apellido_paterno" required value={formData.apellido_paterno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
+            <input type="text" name="apellido_paterno" required maxLength={50} value={formData.apellido_paterno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
           </div>
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Apellido Materno</label>
-            <input type="text" name="apellido_materno" value={formData.apellido_materno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
+            <input type="text" name="apellido_materno" maxLength={50} value={formData.apellido_materno} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass" />
           </div>
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Nacimiento</label>
-            <input type="date" name="fecha_nacimiento" value={formData.fecha_nacimiento} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass text-gray-300" />
+            <input type="date" name="fecha_nacimiento" max={new Date().toISOString().split('T')[0]} value={formData.fecha_nacimiento} onChange={handleChange} className="w-full px-4 py-3 rounded-xl input-glass text-gray-300" />
           </div>
           <div className="space-y-2">
             <label className="text-sm text-gray-300 ml-1">Grado *</label>

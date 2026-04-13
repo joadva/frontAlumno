@@ -389,14 +389,14 @@ export default function AlumnoDetalle() {
           <div className="lg:col-span-1 glass-panel rounded-2xl p-6 h-fit space-y-4 relative">
             <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-4">
               <h2 className="text-xl font-bold">Detalles</h2>
-              {!isEditingProfile ? (
+              {/* {!isEditingProfile ? (
                 <button onClick={() => { setFormProfile({ nombre: alumno.nombre, apellido_paterno: alumno.apellido_paterno, apellido_materno: alumno.apellido_materno || '', id_grado: alumno.id_grado || '' }); setIsEditingProfile(true); }} className="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full hover:bg-blue-500/20 transition-colors">✎ Editar</button>
               ) : (
                 <div className="flex space-x-2">
                   <button onClick={() => setIsEditingProfile(false)} className="text-xs font-bold text-gray-400 bg-white/5 px-2 py-1 rounded-full hover:bg-white/10 transition-colors">✕</button>
                   <button onClick={handleSaveProfile} className="text-xs font-bold text-green-400 bg-green-500/10 px-3 py-1 rounded-full hover:bg-green-500/20 transition-colors">✓ Guardar</button>
                 </div>
-              )}
+              )} */}
             </div>
 
             <div className="text-center mb-6">
@@ -453,14 +453,17 @@ export default function AlumnoDetalle() {
               ) : null}
               <div>
                 <p className="text-xs text-gray-400 mb-1">Estatus del Sistema</p>
-                <select
+                <div className="bg-black/40 border border-white/10 rounded-lg p-2 w-full text-sm text-white">
+                  {alumno.estatus}
+                </div>
+                {/* <select
                   className="bg-black/40 border border-white/10 rounded-lg p-2 w-full text-sm text-white focus:outline-none"
                   value={alumno.estatus} onChange={(e) => handleUpdate({ estatus: e.target.value })}
                 >
                   <option value="ACTIVO">Activo</option>
                   <option value="INACTIVO">Inactivo</option>
                   <option value="SUSPENDIDO">Suspendido</option>
-                </select>
+                </select> */}
               </div>
             </div>
           </div>
